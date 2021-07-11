@@ -3,7 +3,7 @@ var http = require("http");
 var static = require("serve-static");
 var path = require("path");
 
-var bodyParser = require("body-parser");
+var bodyParser = require("body-parser"); // POST 방식을 처리할 수 있도록
 
 var app = express();
 
@@ -17,13 +17,13 @@ app.use((req, res, next) => {
   console.log("첫번째 미들웨어 호출됨.");
 
   var userAgent = req.header("User-Agent");
-  var paramName = req.body.name || req.query.name;
+  var paramId = req.body.id || req.query.id;
 
   res.send(
     "<h3>서버에서 응답. User-Agent -> " +
       userAgent +
       "</h3><h3>Param Name -> " +
-      paramName +
+      paramId +
       "</h3>"
   );
 }); // 미들웨어 등록
