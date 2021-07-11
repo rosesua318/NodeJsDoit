@@ -16,6 +16,7 @@ app.set("port", process.env.PORT || 3000);
 app.use("/public", static(path.join(__dirname, "public")));
 app.use("/uploads", static(path.join(__dirname, "uploads")));
 
+// POST방식의 요청 파라미터 처리하기 위함
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
