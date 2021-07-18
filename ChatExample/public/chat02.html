@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>채팅 클라이언트 02</title>
+
+    <script src="jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js" integrity="sha512-PU5S6BA03fRv1Q5fpwXjg5nlRrgdoguZ74urFInkbABMCENyx5oP3hrDzYMMPh3qdLdknIvrGj3yqZ4JuU7Nag==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        let socket
+        $(() => {
+
+        });
+
+        const connect = () => {
+            const host = $('#hostInput').val();
+            const port = $('#portInput').val();
+
+            connectToServer(host, port);
+        }
+
+        const connectToServer = (host, post) => {
+            const url = 'http://' + host + ':' + port;
+            const options = {
+                forceNew:true // 연결이 끊어졌을 때 새로운 연결 되게
+            }
+            socket = io.connect(url, options); // 서버 쪽으로 접속을 시도
+
+            socket.on('connect', () => {
+                println('웹소켓 서버에 연결됨 -> ' + url);
+            });
+
+            socket.on('disconnect', () => {
+                println('웹소켓 연결 종료됨.');
+            });
+
+            // 서버에서 오는 메시지를 받는 이벤트
+            socket.on('message', (message) => {
+                println('수신 -> ' + JSON.stringify(message));
+            })
+        }
+
+        const send = () => {
+            const sender = $('#senderInput').val();
+            const recepient = $('#recepientInput').val();
+            const data = $('#dataInput').val();
+
+            const message = {
+                sender:sender,
+                recepient: recepient,
+                command: 'chat',
+                type: 'text',
+                data: data
+            };
+
+            socket.emit('message', message);
+        }
+
+        const println = (data) => {
+            console.log(data);
+            $('#results').append('<p>' + data + '</p>');
+        }
+    </script>
+</head>
+<body>
+    <h3>채팅 클라이언트 02</h3>
+    <br>
+    <div>
+        <input type="text" id="hostInput" value="localhost">
+        <input type="text" id="portInput" value="3000">
+        <input type="button" id="connectButton" value="연결하기" onclick="connect()">
+    </div>
+    <br>
+    <div>
+        <div>
+            <span>보내는 사람 : </span>
+            <input type="text" id="senderInput" value="test01">
+        </div>
+        <div>
+            <span>받는 사람 : </span>
+            <input type="text" id="recepientInput" value="ALL">
+        </div>
+        <div>
+            <span>전송할 데이터 : </span>
+            <input type="text" id="dataInput" value="안녕!">
+        </div>
+        <br>
+        <input type="button" id="sendButton" value="전송" onclick="send()">
+    </div>
+    <hr>
+    <p>결과</p>
+    <div id="results"></div>
+</body>
+</html>
