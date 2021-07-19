@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPC - Echo</title>
+    <script src="jquery-3.1.1.min.js"></script>
+    <script src="jquery.jsonrpc.js"></script>
+    <script>
+        $(function() {
+            $.jsonRpc.setup({
+                endPoint:'http://localhost:3000/api',
+                namespace:''
+            });
+
+            $('#requestButton').bind('click', () => {
+                var method = 'listuser';
+                $.jsonRPC.request(
+                    method,
+                    {
+                        id: 1001,
+                        params: [],
+                        success: (input) => {
+                            println('응답 받음 -> ' + JSON.stringify(input));
+                        },
+                        error: (err) => {
+                            println('에러 받음 ->' + JSON.stringify(err));
+                        }
+                    }
+                );
+
+                println('[' + method + '] 함수를 호출하도록 요청함.');
+            });
+        });
+
+        const println = (data) => {
+            $('#results').append('<p>' + data + '</p>');
+        };
+    </script>
+</head>
+<body>
+    <h3>RPC - ListUser</h3>
+    <br>
+    <input type="button" name="requestButton" id="requestButton" value="요청"/>
+    <br>
+    <p>결과</p>
+    <div id="results"></div>
+</body>
+</html>
