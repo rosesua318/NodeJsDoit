@@ -1,14 +1,3 @@
-/**
- * 미션 5
- *
- * 미션 3에 데이터베이스 기능 붙이기
- *
- * MySQL 사용 : memo_table.sql 파일로 테이블 생성 가능
- *
- * 1. 웹서버 실행 : 명령프롬프트에서 node app.js 실행
- * 2. 웹페이지 열기 : 웹브라우저에서 http://localhost:3000/public/memo.html 열기
- */
-
 // Express 기본 모듈 불러오기
 const express = require("express");
 const http = require("http");
