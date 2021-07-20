@@ -66,7 +66,7 @@ function connectDB() {
     console.log("MemoSchema 정의함.");
 
     // MemoModel 모델 정의
-    MemoModel = mongoose.model("users", MemoSchema);
+    MemoModel = mongoose.model("memos", MemoSchema);
     console.log("MemoModel 정의함.");
   });
 

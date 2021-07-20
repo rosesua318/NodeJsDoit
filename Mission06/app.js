@@ -68,10 +68,10 @@ var upload = multer({
 let database;
 
 // 데이터베이스 스키마 객체를 위한 변수 선언
-let MemoSchema;
+let PhotoMemoSchema;
 
 // 데이터베이스 모델 객체를 위한 변수 선언
-let MemoModel;
+let PhotoMemoModel;
 
 //데이터베이스에 연결
 function connectDB() {
