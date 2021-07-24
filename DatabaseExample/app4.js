@@ -110,7 +110,6 @@ router.route("/process/login").post((req, res) => {
 
       if (docs) {
         console.dir(docs);
-
         res.writeHead(200, { "Content-Type": "text/html;charset=utf8" });
         res.write("<h1>사용자 로그인 성공</h1>");
         res.write("<div><p>사용자 : " + docs[0].name + "</p></div>");
